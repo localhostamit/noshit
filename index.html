@@ -1,186 +1,412 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOSHIT. | Captain Amit</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>TheRaw. | Captain Amit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700;900&display=swap" rel="stylesheet">
+    
     <style>
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-            background-color: #ffffff;
-            color: #0f0f0f;
-            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
-            background-size: 20px 20px;
+        /* CSS VARIABLES FOR DARK/LIGHT MODE */
+        :root {
+            --bg-main: #ffffff;
+            --text-main: #000000;
+            --border-main: #000000;
+            --card-bg: #ffffff;
+            --accent-1: #ff00c8;
+            --accent-2: #00ffff;
+            --grid-color: #e4e4e7;
+            --card-shadow: #000000;
+            --btn-hover: #00ffff;
+            --tag-bg: #ffffff;
         }
 
-        /* Funky Glitch Logo Animation */
-        .glitch-wrapper {
+        [data-theme="dark"] {
+            --bg-main: #0a0a0a;
+            --text-main: #f4f4f5;
+            --border-main: #f4f4f5;
+            --card-bg: #121212;
+            --accent-1: #ff00c8;
+            --accent-2: #00ffff;
+            --grid-color: #27272a;
+            --card-shadow: #ff00c8;
+            --btn-hover: #ff00c8;
+            --tag-bg: #0a0a0a;
+        }
+
+        /* BASE VIBE & RESET */
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+        
+        body {
+            font-family: 'Space Grotesk', system-ui, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            background-image: 
+                linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            cursor: none; /* Custom cursor */
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        a { color: inherit; text-decoration: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* NAVIGATION */
+        nav {
+            padding: 24px;
+            border-bottom: 4px solid var(--border-main);
+            background: var(--bg-main);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links { display: flex; gap: 32px; font-weight: 700; font-size: 1.25rem; text-transform: uppercase; align-items: center;}
+        .nav-links a { position: relative; transition: color 0.2s; }
+        .nav-links a:hover { text-decoration: underline; text-decoration-thickness: 4px; text-underline-offset: 4px; }
+        .nav-links a:nth-child(1):hover { color: var(--accent-1); }
+        .nav-links a:nth-child(2):hover { color: var(--accent-2); }
+
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid var(--border-main);
+            color: var(--text-main);
+            font-family: inherit;
+            font-weight: 900;
+            padding: 8px 16px;
+            cursor: none;
+            text-transform: uppercase;
+        }
+        .theme-toggle:hover { background: var(--text-main); color: var(--bg-main); }
+
+        /* GLITCH TEXT */
+        .glitch-text {
             position: relative;
             display: inline-block;
-        }
-        .glitch {
-            position: relative;
-            font-size: 4rem;
-            font-weight: 700;
-            line-height: 1;
-            color: #0f0f0f;
+            font-weight: 900;
+            font-size: clamp(2rem, 5vw, 3rem);
             text-transform: uppercase;
-            z-index: 1;
         }
-        .glitch::before, .glitch::after {
+        .glitch-text::before, .glitch-text::after {
             content: attr(data-text);
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-main);
+        }
+        .glitch-text::before {
+            left: 4px; text-shadow: -2px 0 var(--accent-1);
+            animation: glitch-anim-1 2s infinite linear alternate-reverse; z-index: -1;
+        }
+        .glitch-text::after {
+            left: -4px; text-shadow: -2px 0 var(--accent-2);
+            animation: glitch-anim-2 3s infinite linear alternate-reverse; z-index: -2;
+        }
+
+        @keyframes glitch-anim-1 {
+            0% { clip-path: inset(20% 0 80% 0); } 20% { clip-path: inset(60% 0 10% 0); }
+            40% { clip-path: inset(40% 0 50% 0); } 60% { clip-path: inset(80% 0 5% 0); }
+            80% { clip-path: inset(10% 0 70% 0); } 100% { clip-path: inset(30% 0 40% 0); }
+        }
+        @keyframes glitch-anim-2 {
+            0% { clip-path: inset(10% 0 60% 0); } 20% { clip-path: inset(30% 0 20% 0); }
+            40% { clip-path: inset(70% 0 10% 0); } 60% { clip-path: inset(20% 0 50% 0); }
+            80% { clip-path: inset(90% 0 5% 0); } 100% { clip-path: inset(40% 0 30% 0); }
+        }
+
+        /* HERO SECTION */
+        .hero {
+            text-align: center; padding: 100px 24px;
+            animation: float 4s ease-in-out infinite;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .hero h1 { font-size: clamp(3rem, 8vw, 6rem); font-weight: 900; text-transform: uppercase; line-height: 1; margin-bottom: 24px; }
+        .hero h1 span { background: linear-gradient(to right, var(--accent-1), var(--accent-2)); -webkit-background-clip: text; color: transparent; }
+        
+        .hero-panel {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-weight: 700; max-width: 900px;
+            border-left: 8px solid var(--border-main); padding: 24px; background: var(--card-bg);
+            text-align: left; box-shadow: 8px 8px 0px var(--card-shadow);
+        }
+        .hero-panel strong { display: block; margin-top: 16px; color: var(--accent-1); font-weight: 900; text-transform: uppercase; }
+
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        /* ABOUT SECTION */
+        .about-section { background: var(--accent-2); padding: 80px 24px; border-top: 4px solid var(--border-main); border-bottom: 4px solid var(--border-main); color: #000; }
+        .about-grid { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; }
+        @media (min-width: 768px) { .about-grid { grid-template-columns: 1fr 1fr; } }
+        
+        .about-text h2 { font-size: 3rem; font-weight: 900; text-transform: uppercase; margin-bottom: 8px; }
+        .about-text h3 { font-size: 2rem; font-weight: 700; opacity: 0.8; margin-bottom: 32px; }
+        .about-text p { font-size: 1.25rem; font-weight: 600; margin-bottom: 24px; }
+
+        .tag-container { display: flex; flex-wrap: wrap; gap: 16px; }
+        .tag { padding: 8px 20px; border: 4px solid #000; background: #fff; font-weight: 900; text-transform: uppercase; box-shadow: 4px 4px 0px #000; color: #000; }
+
+        /* INSPIRATION SECTION */
+        .inspiration-section {
+            padding: 80px 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 4px solid var(--border-main);
+            background: var(--bg-main);
+        }
+        .inspiration-card {
+            border: 4px solid var(--border-main);
+            background: var(--card-bg);
+            padding: 48px;
+            max-width: 800px;
             width: 100%;
-            height: 100%;
-            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 8px 8px 0px var(--card-shadow);
+            gap: 24px;
         }
-        .glitch::before {
-            left: 3px;
-            text-shadow: -2px 0 #ff00c8;
-            clip: rect(24px, 550px, 90px, 0);
-            animation: glitch-anim 3s infinite linear alternate-reverse;
-            z-index: -1;
+        @media (min-width: 768px) {
+            .inspiration-card { flex-direction: row; text-align: left; }
         }
-        .glitch::after {
-            left: -3px;
-            text-shadow: -2px 0 #00ffff;
-            clip: rect(85px, 550px, 140px, 0);
-            animation: glitch-anim 2s infinite linear alternate-reverse;
-            z-index: -2;
+        .sketch-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 4px solid var(--border-main);
+            object-fit: cover;
+            /* CSS Filter to create a sketch/raw effect */
+            filter: grayscale(100%) contrast(180%) brightness(1.1) sepia(20%);
+            box-shadow: 8px 8px 0px var(--accent-1);
         }
-        @keyframes glitch-anim {
-            0% { clip: rect(15px, 9999px, 86px, 0); }
-            20% { clip: rect(62px, 9999px, 14px, 0); }
-            40% { clip: rect(34px, 9999px, 53px, 0); }
-            60% { clip: rect(98px, 9999px, 20px, 0); }
-            80% { clip: rect(4px, 9999px, 76px, 0); }
-            100% { clip: rect(43px, 9999px, 32px, 0); }
+        .inspiration-text h3 { font-size: 1.5rem; font-weight: 900; text-transform: uppercase; color: var(--accent-2); margin-bottom: 8px;}
+        .inspiration-text blockquote {
+            font-size: 2.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .inspiration-text span { font-weight: 700; font-size: 1.25rem; opacity: 0.8; }
+
+        /* BRUTALIST CARDS */
+        .card-brutal {
+            border: 4px solid var(--border-main); background: var(--card-bg); padding: 32px;
+            box-shadow: 8px 8px 0px var(--card-shadow); transition: transform 0.15s ease, box-shadow 0.15s ease;
+            display: flex; flex-direction: column;
+        }
+        .quote-card { transform: rotate(2deg); background: var(--card-bg); border-color: #000; box-shadow: 8px 8px 0px #000; }
+        .quote-card:hover { transform: rotate(0deg); }
+        .quote-card p { font-size: 2.5rem; font-weight: 900; text-transform: uppercase; text-align: center; color: var(--accent-1); line-height: 1.2; }
+        [data-theme="dark"] .quote-card { border-color: var(--border-main); box-shadow: 8px 8px 0px var(--accent-1); }
+
+        /* ARSENAL SECTION */
+        .arsenal-section { padding: 100px 24px; }
+        .arsenal-header { text-align: center; margin-bottom: 64px; }
+        .projects-grid { display: grid; grid-template-columns: 1fr; gap: 48px; }
+        @media (min-width: 768px) { .projects-grid { grid-template-columns: 1fr 1fr; } }
+
+        .card-brutal:hover { transform: translate(-4px, -4px); box-shadow: 12px 12px 0px var(--accent-1); }
+        .card-brutal.alt:hover { box-shadow: 12px 12px 0px var(--accent-2); }
+
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+        .card-header h3 { font-size: 2rem; font-weight: 900; text-transform: uppercase; }
+
+        .project-tag { padding: 4px 16px; border: 2px solid var(--border-main); font-weight: 700; text-transform: uppercase; font-size: 0.875rem; color: #000; }
+        .tag-edu { background: var(--accent-2); }
+        .tag-sec { background: var(--accent-1); color: #fff; }
+        .tag-agri { background: #fbbf24; }
+        .tag-ai { background: #a855f7; color: #fff; }
+
+        .card-brutal p { font-size: 1.25rem; font-weight: 500; margin-bottom: 32px; flex-grow: 1; }
+        .highlight-ai { font-weight: 900; color: var(--accent-1); }
+
+        .btn {
+            display: block; width: 100%; text-align: center; padding: 16px; border: 4px solid var(--border-main);
+            font-weight: 900; text-transform: uppercase; font-size: 1.25rem; background: var(--bg-main); color: var(--text-main);
+            cursor: none; transition: background 0.2s, color 0.2s;
+        }
+        .btn-launch:hover { background: var(--btn-hover); color: #000; }
+        .btn-disabled { background: var(--grid-color); opacity: 0.7; cursor: none; }
+
+        /* FOOTER */
+        footer {
+            border-top: 8px solid var(--border-main); background: #000; color: #fff;
+            text-align: center; padding: 64px 24px; margin-top: auto;
+        }
+        footer h2 { font-size: 3rem; font-weight: 900; text-transform: uppercase; margin-bottom: 16px; }
+        .footer-ownership { font-weight: 700; font-size: 1.25rem; color: var(--accent-2); text-transform: uppercase; margin-bottom: 24px; letter-spacing: 1px; }
+        footer p.credits { font-family: monospace; font-size: 1.1rem; opacity: 0.8; }
+
+        /* CUSTOM NEON CURSOR & ANIMATION */
+        #cursor {
+            position: fixed; top: 0; left: 0; width: 20px; height: 20px; border-radius: 50%;
+            background-color: var(--accent-1); mix-blend-mode: difference; pointer-events: none;
+            z-index: 9999; transform: translate(-50%, -50%);
+            transition: width 0.15s ease, height 0.15s ease, background-color 0.15s ease, transform 0.05s linear;
+        }
+        
+        body:has(a:hover, button:hover) #cursor { width: 50px; height: 50px; background-color: var(--accent-2); }
+        
+        /* Click Animation */
+        body.clicking #cursor {
+            transform: translate(-50%, -50%) scale(0.5);
+            background-color: #ffffff;
         }
 
-        /* Brutalist Card Hover */
-        .brutalist-card {
-            border: 3px solid #0f0f0f;
-            box-shadow: 8px 8px 0px #0f0f0f;
-            transition: all 0.2s ease-in-out;
-        }
-        .brutalist-card:hover {
-            transform: translate(-4px, -4px);
-            box-shadow: 12px 12px 0px #ff00c8;
-        }
-
-        /* Float Animation */
-        .float-anim {
-            animation: float 6s ease-in-out infinite;
-        }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
+        /* Mobile tweaks */
+        @media (max-width: 768px) {
+            .nav-links { gap: 16px; font-size: 1rem; }
+            #cursor { display: none; }
+            body { cursor: auto; }
+            .theme-toggle, .btn { cursor: pointer; }
         }
     </style>
 </head>
-<body class="antialiased min-h-screen flex flex-col">
+<body>
 
-    <!-- Navigation -->
-    <nav class="p-6 border-b-4 border-black bg-white sticky top-0 z-50 flex justify-between items-center">
-        <div class="glitch-wrapper">
-            <div class="glitch text-3xl md:text-5xl" data-text="NOSHIT.">NOSHIT.</div>
-        </div>
-        <div class="hidden md:flex gap-6 font-bold text-lg uppercase">
-            <a href="#about" class="hover:text-[#ff00c8] hover:underline decoration-4 transition-colors">Captain</a>
-            <a href="#projects" class="hover:text-[#00ffff] hover:underline decoration-4 transition-colors">Arsenal</a>
+    <div id="cursor"></div>
+
+    <nav>
+        <div class="glitch-text" data-text="TheRaw.">TheRaw.</div>
+        <div class="nav-links">
+            <a href="#about">Captain</a>
+            <a href="#arsenal">Arsenal</a>
+            <button class="theme-toggle" id="themeBtn">Dark</button>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="flex-grow flex flex-col justify-center items-center text-center p-8 mt-12 mb-20 float-anim">
-        <h2 class="text-5xl md:text-7xl font-bold max-w-4xl leading-tight uppercase bg-clip-text text-transparent bg-gradient-to-r from-black to-gray-700">
-            Raw Logic. <br> Zero Fluff.
-        </h2>
-        <p class="mt-6 text-xl md:text-2xl font-semibold max-w-2xl border-l-4 border-[#ff00c8] pl-4 text-left">
-            The central hub for all utilities, applications, and systems engineered to eliminate friction.
-        </p>
+    <header class="hero container">
+        <h1>Raw Logic.<br> <span>Zero Fluff.</span></h1>
+        <div class="hero-panel">
+            The central nervous system for all tools, applications, and architecture engineered to eliminate friction. Powered heavily by AI logic structuring.
+            <strong>All systems, websites, and tools listed below are the exclusive property of TheRaw company.</strong>
+        </div>
     </header>
 
-    <!-- About Captain Section -->
-    <section id="about" class="px-6 py-16 bg-[#00ffff] border-y-4 border-black text-black">
-        <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-            <div>
-                <h3 class="text-4xl font-bold uppercase mb-4">Commanding Officer</h3>
-                <h4 class="text-2xl font-bold mb-6">Captain Amit</h4>
-                <p class="text-lg font-medium leading-relaxed mb-4">
-                    Building robust, front-end architecture and peer-to-peer logic. Navigating through the BCA curriculum while engineering real-world solutions that don't waste time.
-                </p>
-                <div class="flex gap-4 mt-6">
-                    <span class="px-4 py-2 border-2 border-black bg-white font-bold text-sm">React</span>
-                    <span class="px-4 py-2 border-2 border-black bg-white font-bold text-sm">Tailwind</span>
-                    <span class="px-4 py-2 border-2 border-black bg-white font-bold text-sm">WebRTC</span>
+    <section id="about" class="about-section">
+        <div class="container about-grid">
+            <div class="about-text">
+                <h2>Commanding Officer</h2>
+                <h3>Captain Amit</h3>
+                <p>Frontend architecture and peer-to-peer logic specialist. Navigating BCA curriculum while engineering real-world solutions. Utilizing advanced AI for rapid code generation and infrastructure scaling.</p>
+                <div class="tag-container">
+                    <span class="tag">React</span>
+                    <span class="tag">Tailwind</span>
+                    <span class="tag">WebRTC</span>
+                    <span class="tag">AI Stack</span>
                 </div>
             </div>
-            <div class="brutalist-card bg-white p-8 rotate-1">
-                <p class="text-3xl font-bold uppercase text-center tracking-widest text-[#ff00c8]">"Function Over Form. Truth Over Comfort."</p>
+            <div class="card-brutal quote-card">
+                <p>"Function Over Form.<br>Truth Over Comfort."</p>
             </div>
         </div>
     </section>
 
-    <!-- Projects Arsenal Section -->
-    <section id="projects" class="px-6 py-20 max-w-7xl mx-auto">
-        <h3 class="text-5xl font-bold uppercase mb-12 text-center glitch" data-text="THE ARSENAL">THE ARSENAL</h3>
+    <!-- INSPIRATION SECTION -->
+    <section class="inspiration-section">
+        <div class="inspiration-card">
+            <!-- Bulletproof GitHub Avatar URL -->
+            <img src="https://avatars.githubusercontent.com/u/1024025?v=4" alt="Linus Torvalds Sketch" class="sketch-image">
+            <div class="inspiration-text">
+                <h3>The Inspiration</h3>
+                <blockquote>"Talk is cheap. Show me the code."</blockquote>
+                <span>— Linus Torvalds</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="arsenal" class="arsenal-section container">
+        <div class="arsenal-header">
+            <h2 class="glitch-text" style="font-size: clamp(3rem, 6vw, 4rem);" data-text="THE ARSENAL">THE ARSENAL</h2>
+        </div>
         
-        <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-10">
-            <!-- Project 1 -->
-            <div class="brutalist-card bg-white p-8 flex flex-col">
-                <div class="flex justify-between items-start mb-4">
-                    <h4 class="text-3xl font-bold uppercase">PyQHub</h4>
-                    <span class="px-3 py-1 bg-[#00ffff] border-2 border-black font-bold text-xs">Education</span>
+        <div class="projects-grid">
+            
+            <div class="card-brutal">
+                <div class="card-header">
+                    <h3>PyQHub</h3>
+                    <span class="project-tag tag-edu">Education</span>
                 </div>
-                <p class="text-lg font-medium mb-6 flex-grow">The central repository for university Previous Year Questions. Hosted at pyqhubs.in. Eliminating the scramble for study materials before exams.</p>
-                <a href="https://pyqhubs.in" target="_blank" class="block w-full text-center py-3 border-2 border-black font-bold uppercase hover:bg-black hover:text-white transition-colors">Launch System</a>
+                <p>Central repository for university Previous Year Questions. Eliminating the scramble for study materials before exams. Officially operated by TheRaw.</p>
+                <a href="https://pyqhubs.in" target="_blank" class="btn btn-launch">Launch pyqhubs.in</a>
             </div>
 
-            <!-- Project 2 -->
-            <div class="brutalist-card bg-white p-8 flex flex-col">
-                <div class="flex justify-between items-start mb-4">
-                    <h4 class="text-3xl font-bold uppercase">GhostLink</h4>
-                    <span class="px-3 py-1 bg-[#ff00c8] text-white border-2 border-black font-bold text-xs">P2P Security</span>
+            <!-- SARTHI CARD SWAPPED IN HERE -->
+            <div class="card-brutal alt">
+                <div class="card-header">
+                    <h3>Sarthi</h3>
+                    <span class="project-tag tag-ai">AI Engine</span>
                 </div>
-                <p class="text-lg font-medium mb-6 flex-grow">A pure peer-to-peer, privacy-focused chat application built entirely on WebRTC. No servers, no data retention. Just direct connections.</p>
-                <button class="w-full text-center py-3 border-2 border-black font-bold uppercase bg-gray-200 cursor-not-allowed">Active Build</button>
+                <p>An intelligent companion tool. <span class="highlight-ai">Powered by generative AI</span> to provide structured academic guidance, eliminate cognitive friction, and serve as a reliable developmental co-pilot. Developed by TheRaw.</p>
+                <button class="btn btn-disabled" disabled>Status: AI Core Active</button>
             </div>
 
-            <!-- Project 3 -->
-            <div class="brutalist-card bg-white p-8 flex flex-col">
-                <div class="flex justify-between items-start mb-4">
-                    <h4 class="text-3xl font-bold uppercase">KisanMitra</h4>
-                    <span class="px-3 py-1 bg-yellow-400 border-2 border-black font-bold text-xs">Agri-Tech</span>
+            <div class="card-brutal alt">
+                <div class="card-header">
+                    <h3>GhostLink</h3>
+                    <span class="project-tag tag-sec">P2P Security</span>
                 </div>
-                <p class="text-lg font-medium mb-6 flex-grow">Real-time Haryana mandi rate tracking utilizing open government APIs. Built with a pure desi aesthetic—all "Taur", zero compromise.</p>
-                <button class="w-full text-center py-3 border-2 border-black font-bold uppercase bg-gray-200 cursor-not-allowed">Active Build</button>
+                <p>Pure peer-to-peer, privacy-focused chat built on WebRTC. No servers, no data retention. Direct connections only. A property of TheRaw.</p>
+                <button class="btn btn-disabled" disabled>Status: Active Build</button>
             </div>
 
-            <!-- Project 4 -->
-            <div class="brutalist-card bg-white p-8 flex flex-col">
-                <div class="flex justify-between items-start mb-4">
-                    <h4 class="text-3xl font-bold uppercase text-ellipsis overflow-hidden whitespace-nowrap" title="Jeet Committee Record Manager">Jeet Committee</h4>
-                    <span class="px-3 py-1 bg-green-400 border-2 border-black font-bold text-xs">Finance</span>
+            <div class="card-brutal">
+                <div class="card-header">
+                    <h3>KisanMitra</h3>
+                    <span class="project-tag tag-agri">Agri-Tech</span>
                 </div>
-                <p class="text-lg font-medium mb-6 flex-grow">A bulletproof digital ledger tool using Firebase. Features offline persistence to manage local committee bidding and finances without failure.</p>
-                <button class="w-full text-center py-3 border-2 border-black font-bold uppercase bg-gray-200 cursor-not-allowed">Active Build</button>
+                <p>Real-time Haryana mandi rate tracking utilizing open government APIs. Built with a pure desi aesthetic—all "Taur", zero compromise. Engineered by TheRaw.</p>
+                <button class="btn btn-disabled" disabled>Status: Active Build</button>
             </div>
+
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="mt-auto border-t-4 border-black bg-black text-white p-8 text-center">
-        <h2 class="text-3xl font-bold uppercase tracking-widest glitch-wrapper inline-block">
-            <span class="glitch text-white" data-text="NOSHIT.">NOSHIT.</span>
-        </h2>
-        <p class="mt-4 font-mono text-sm opacity-70">Engineered by Captain Amit. © 2026</p>
+    <footer>
+        <h2>TheRaw.</h2>
+        <div class="footer-ownership">All tools, applications, and websites are the exclusive property of TheRaw Company.</div>
+        <p class="credits">Engineered by Captain Amit. © 2026</p>
     </footer>
 
+    <script>
+        // Custom Cursor Logic
+        const cursor = document.getElementById('cursor');
+        
+        if (window.matchMedia("(pointer: fine)").matches) {
+            document.addEventListener('mousemove', (e) => {
+                requestAnimationFrame(() => {
+                    cursor.style.left = e.clientX + 'px';
+                    cursor.style.top = e.clientY + 'px';
+                });
+            });
+
+            // Click Animation Trigger
+            document.addEventListener('mousedown', () => document.body.classList.add('clicking'));
+            document.addEventListener('mouseup', () => document.body.classList.remove('clicking'));
+
+            document.addEventListener('mouseleave', () => cursor.style.display = 'none');
+            document.addEventListener('mouseenter', () => cursor.style.display = 'block');
+        }
+
+        // Dark/Light Mode Toggle Logic
+        const themeBtn = document.getElementById('themeBtn');
+        const htmlElement = document.documentElement;
+
+        themeBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            if (currentTheme === 'light') {
+                htmlElement.setAttribute('data-theme', 'dark');
+                themeBtn.innerText = 'Light';
+            } else {
+                htmlElement.setAttribute('data-theme', 'light');
+                themeBtn.innerText = 'Dark';
+            }
+        });
+    </script>
 </body>
 </html>
