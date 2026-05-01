@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackeit | Stop Talking, Start Coding</title>
+    <style>
+        /* === BASE RESET & VARIABLES === */
+        :root {
+            --bg-color: #050505;
+            --text-main: #f0f0f0;
+            --neon-primary: #ff0055;
+            --neon-secondary: #00ffcc;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none; /* Custom cursor used */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* === ANIMATED BACKGROUND === */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: radial-gradient(circle at 15% 50%, rgba(255, 0, 85, 0.08), transparent 25%),
+                        radial-gradient(circle at 85% 30%, rgba(0, 255, 204, 0.08), transparent 25%);
+            animation: pulse-bg 10s infinite alternate;
+        }
+
+        @keyframes pulse-bg {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        /* === CUSTOM CURSOR === */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--neon-secondary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+        
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--neon-primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s;
+        }
+
+        /* === LAYOUT & SECTIONS === */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        /* === HERO SECTION === */
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            animation: glitch-anim 2.5s infinite;
+        }
+
+        .hero-title::before, .hero-title::after {
+            content: 'HACKEIT';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+
+        .hero-title::before {
+            color: var(--neon-secondary);
+            z-index: -1;
+            animation: glitch-anim-2 3s infinite linear alternate-reverse;
+        }
+
+        .hero-title::after {
+            color: var(--neon-primary);
+            z-index: -2;
+            animation: glitch-anim 2s infinite linear alternate-reverse;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin: 2rem 0;
+            max-width: 600px;
+            color: #aaa;
+            line-height: 1.6;
+        }
+
+        /* Glitch Keyframes */
+        @keyframes glitch-anim {
+            0% { transform: translate(0) }
+            20% { transform: translate(-2px, 2px) }
+            40% { transform: translate(-2px, -2px) }
+            60% { transform: translate(2px, 2px) }
+            80% { transform: translate(2px, -2px) }
+            100% { transform: translate(0) }
+        }
+
+        /* === BUTTONS === */
+        .cta-btn {
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--bg-color);
+            background: var(--neon-secondary);
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px var(--neon-secondary);
+        }
+
+        .cta-btn:hover {
+            background: var(--neon-primary);
+            box-shadow: 0 0 25px var(--neon-primary);
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        /* === ABOUT SECTION === */
+        .cards-container {
+            display: flex;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            width: 300px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--neon-primary);
+        }
+
+        .card h3 {
+            color: var(--neon-secondary);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* === CONTACT FORM === */
+        .form-container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid #333;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        .form-container h2 {
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            color: var(--neon-primary);
+        }
+
+        .form-container p {
+            margin-bottom: 2rem;
+            color: #888;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--neon-secondary);
+            box-shadow: 0 0 10px rgba(0, 255, 204, 0.2);
+        }
+
+        .submit-btn {
+            width: 100%;
+            cursor: none; /* Let custom cursor take over */
+        }
+
+        /* === SCROLL REVEAL UTILS === */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Animated Background -->
+    <div class="bg-animation"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <!-- Hero Section -->
+    <section id="home">
+        <h1 class="hero-title">Hackeit</h1>
+        <p class="hero-subtitle">Sleep is a myth. Code is reality. Local hackathons for people who actually want to build dope stuff, not just hand out resumes to corporate sponsors.</p>
+        <a href="#contact" class="cta-btn">Claim Your Spot</a>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="reveal">
+        <h2 style="font-size: 3rem; margin-bottom: 1rem;">Why We Don't Suck</h2>
+        <p style="color: #aaa; max-width: 600px;">No boring keynotes. No useless swag you'll throw away. Just 48 hours of pure, unadulterated building with the sharpest minds in the city.</p>
+        
+        <div class="cards-container">
+            <div class="card">
+                <h3>Raw Code</h3>
+                <p>We don't care about your slide deck. If the prototype doesn't work, it doesn't count. Show us the repo.</p>
+            </div>
+            <div class="card">
+                <h3>Vicious Caffeine</h3>
+                <p>We supply enough energy drinks to power a small electric vehicle. You supply the brainpower.</p>
+            </div>
+            <div class="card">
+                <h3>Zero BS</h3>
+                <p>No corporate recruiters trying to hire you for their legacy Java stack. Just hackers judging hackers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / CTA Section -->
+    <section id="contact" class="reveal">
+        <div class="form-container">
+            <h2>Holler At Us</h2>
+            <p>Got a question? Want to sponsor? Or just want to tell us our website is too flashy? Drop it below.</p>
+            
+            <form onsubmit="event.preventDefault(); alert('Message logged. Now get back to coding.');">
+                <div class="input-group">
+                    <input type="text" placeholder="Your Alias (Name)" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" placeholder="Your Comms (Email)" required>
+                </div>
+                <div class="input-group">
+                    <textarea placeholder="Spit it out... (Your Message)" required></textarea>
+                </div>
+                <button type="submit" class="cta-btn submit-btn">Send It</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Interactive JavaScript -->
+    <script>
+        // Custom Cursor Logic
+        const cursorDot = document.getElementById("cursor-dot");
+        const cursorOutline = document.getElementById("cursor-outline");
+
+        window.addEventListener("mousemove", function (e) {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            // Adding a slight delay to the outline for a smooth trailing effect
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Hover effect for links/buttons to expand the custom cursor
+        const interactables = document.querySelectorAll('a, button, input, textarea');
+        interactables.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursorOutline.style.width = '60px';
+                cursorOutline.style.height = '60px';
+                cursorOutline.style.backgroundColor = 'rgba(0, 255, 204, 0.1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursorOutline.style.width = '40px';
+                cursorOutline.style.height = '40px';
+                cursorOutline.style.backgroundColor = 'transparent';
+            });
+        });
+
+        // Scroll Reveal Logic
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // Trigger on initial load
+    </script>
+</body>
+</html>
